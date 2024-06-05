@@ -336,7 +336,7 @@ class _HomePageState extends State<HomePage> {
                                         pageBuilder: (BuildContext buildContext, Animation<double> animation,
                                             Animation<double> secondaryAnimation) {
                                           return TDAlertDialog(
-                                            content: '物品数据导出${_appDocumentsDir?.path != null ? '，保存路径：${_appDocumentsDir?.path}' : ''}',
+                                            content: '药品数据导出${_appDocumentsDir?.path != null ? '，保存路径：${_appDocumentsDir?.path}' : ''}',
                                             rightBtnAction:() async {
                                               Navigator.of(context).pop();
                                               _createExcel();
