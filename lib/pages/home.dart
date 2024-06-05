@@ -436,10 +436,13 @@ class _HomePageState extends State<HomePage> {
                                 )
                               ))
                             ),
-                            _searchValue.isNotEmpty ? Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                margin: EdgeInsets.fromLTRB(0, 7.px, 8.px, 0),
+                            _searchValue.isNotEmpty ? Positioned(
+                              right: 6.px,
+                              top: 0,
+                              bottom: 0,
+                              child: Align(
+                                alignment: Alignment.center,
+                                // margin: EdgeInsets.fromLTRB(0, 8.px, 8.px, 0),
                                 child: GestureDetector(
                                   onTap: () {
                                     setState(() {
@@ -448,19 +451,21 @@ class _HomePageState extends State<HomePage> {
                                     });
                                   },
                                   child: Box(
-                                    width: 25.px,
-                                    height: 25.px,
-                                    child: Icon(TDIcons.close_circle_filled, size: 19.px, color: hexToColor("#999999")),
+                                    // backgroundColor: Colors.red,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(4.px),
+                                      child: Icon(TDIcons.close_circle_filled, size: 19.px, color: hexToColor("#999999")),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ) : const Align(),
+                            ) : const Placeholder(),
                           ],
                         ),
                       ),
                     )
                   )
-                  : Container(),
+                  : const Placeholder(),
                 ],
               ),
               Expanded(
