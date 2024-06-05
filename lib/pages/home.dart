@@ -520,15 +520,15 @@ class _HomePageState extends State<HomePage> {
                                                       return Text(
                                                         medicineNameChar,
                                                         style: TextStyle(
-                                                          color: isMarched ? hexToColor("#fc1e21") : hexToColor("#111211"),
-                                                          fontSize: 12, decoration: TextDecoration.none, fontWeight: isMarched ? FontWeight.w600 : FontWeight.w400
+                                                          color: isMarched ? hexToColor("#fc1e21") : hexToColor("#202124"),
+                                                          fontSize: 14, decoration: TextDecoration.none, fontWeight: isMarched ? FontWeight.w600 : FontWeight.w400
                                                         )
                                                       );
                                                     }).toList(),
                                                   ),
                                                   Container(
                                                     margin: const EdgeInsets.only(top: 3),
-                                                    child: Text(item.location, style: TextStyle(fontSize: 12, color: hexToColor("#111211"), decoration: TextDecoration.none, fontWeight: FontWeight.w400)),
+                                                    child: Text(item.location, style: TextStyle(fontSize: 12, color: hexToColor("#292a2c"), decoration: TextDecoration.none, fontWeight: FontWeight.w400)),
                                                   )
                                                 ],
                                               ),
