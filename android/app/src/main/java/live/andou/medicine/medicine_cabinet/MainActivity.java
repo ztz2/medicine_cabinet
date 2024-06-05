@@ -1,4 +1,4 @@
-package live.andou.medicine.medicine_cabinet;
+package live.andou.medicine_cabinet;
 
 import io.flutter.embedding.android.FlutterActivity;
 

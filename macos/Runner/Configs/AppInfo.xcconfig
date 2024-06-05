@@ -8,7 +8,7 @@
 PRODUCT_NAME = medicine_cabinet
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = live.andou.medicine.medicineCabinet
+PRODUCT_BUNDLE_IDENTIFIER = live.andou.medicineCabinet
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2024 live.andou.medicine. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2024 live.andou. All rights reserved.

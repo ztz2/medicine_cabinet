@@ -1,11 +1,11 @@
 {
     "name": "medicine_cabinet",
-    "short_name": "中药位置速查",
+    "short_name": "药品助手",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "中药柜药品速查",
+    "description": "药品助手",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

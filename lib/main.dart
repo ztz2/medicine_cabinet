@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:medicine_cabinet/pages/home.dart';
+import 'package:medicine_cabinet/util/color_util.dart';
+import 'package:medicine_cabinet/util/hexto_color.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,9 +14,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
+      title: '药品助手',
+      debugShowCheckedModeBanner: true,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -30,9 +34,12 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Colors.red, // 将光标颜色设置为红色
+        // colorScheme: ColorScheme.fromSeed(seedColor: hexToColor("#ff9db5")),
+        colorScheme: ColorScheme.light(
+          primary: Colors.white,
+          secondary: ColorUtil.primaryFadeColor,
+          surface: Colors.white,
+          // 其他颜色属性
         ),
         useMaterial3: true,
         // textTheme: const TextTheme(
