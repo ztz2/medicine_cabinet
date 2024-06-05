@@ -41,6 +41,11 @@ class MyApp extends StatelessWidget {
           surface: Colors.white,
           // 其他颜色属性
         ),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: hexToColor("#019788"), // 设置光标颜色
+          selectionColor: hexToColor("#019788", opacity: 0.5), // 设置文本选择的背景颜色
+          selectionHandleColor: hexToColor("#019788"), // 设置文本选择句柄的颜色
+        ),
         useMaterial3: true,
         // textTheme: const TextTheme(
         //   bodyText1: TextStyle(fontSize: 18.0), // 配置默认字体大小

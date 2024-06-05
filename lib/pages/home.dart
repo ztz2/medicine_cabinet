@@ -417,13 +417,41 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(30.px),
                         clipBehavior: Clip.antiAlias,
-                        child: Input(
-                          hintText: "搜索",
-                          height: 40.px,
-                          padding: EdgeInsets.fromLTRB(18.px, 0, 20.px, 0),
-                          onChanged: (text) {
-                            _handleSearch(text);
-                          },
+                        child: Stack(
+                          children: [
+                            Input(
+                              hintText: "搜索",
+                              height: 40.px,
+                              padding: EdgeInsets.fromLTRB(18.px, 0, 40.px, 0),
+                              onChanged: (text) {
+                                _handleSearch(text);
+                              },
+                              controller: TextEditingController.fromValue(TextEditingValue(
+                                text: _searchValue,
+                                selection: TextSelection.fromPosition(
+                                  TextPosition(
+                                    affinity: TextAffinity.downstream,
+                                    offset: _searchValue.length
+                                  )
+                                )
+                              ))
+                            ),
+                            _searchValue.isNotEmpty ? Align(
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(0, 8.px, 10.px, 0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _searchValue = '';
+                                      _handleSearch('');
+                                    });
+                                  },
+                                  child: Icon(TDIcons.close_circle_filled, color: hexToColor("#999999")),
+                                ),
+                              ),
+                            ) : const Align(),
+                          ],
                         ),
                       ),
                     )

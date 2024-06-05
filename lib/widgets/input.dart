@@ -12,6 +12,7 @@ class Input extends StatelessWidget {
   final EdgeInsets padding;
   final double? height;
   final double? fontSize;
+  final TextEditingController? controller;
   // final int? maxLength;
   // final bool? maxLengthEnforced;
 
@@ -20,6 +21,7 @@ class Input extends StatelessWidget {
     this.hintText = "必填项",
     this.obscureText = false,
     this.onChanged,
+    this.controller,
     this.height,
     this.fontSize,
     this.keyboardType,
@@ -42,9 +44,10 @@ class Input extends StatelessWidget {
         child: TextField(
           onChanged: onChanged,
           obscureText: obscureText,
+          controller: controller,
           keyboardType: keyboardType,
           // autofocus: !obscureText,
-          cursorColor: hexToColor("#009788"),
+          // cursorColor: hexToColor("#009788"),
           style: TextStyle(
             fontSize: fontSizeValue,
             color: color,
