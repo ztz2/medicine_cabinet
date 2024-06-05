@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medicine_cabinet/pages/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -29,9 +31,19 @@ class MyApp extends StatelessWidget {
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.red, // 将光标颜色设置为红色
+        ),
         useMaterial3: true,
+        // textTheme: const TextTheme(
+        //   bodyText1: TextStyle(fontSize: 18.0), // 配置默认字体大小
+        //   bodyText2: TextStyle(fontSize: 16.0), // 配置次要文本的默认字体大小
+        //   headline1: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
+        //   headline2: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+        // )
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const HomePage()
     );
   }
 }
