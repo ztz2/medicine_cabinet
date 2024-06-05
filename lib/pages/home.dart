@@ -459,13 +459,13 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ),
-                            ) : const Placeholder(),
+                            ) : Container(),
                           ],
                         ),
                       ),
                     )
                   )
-                  : const Placeholder(),
+                  : Container(),
                 ],
               ),
               Expanded(
