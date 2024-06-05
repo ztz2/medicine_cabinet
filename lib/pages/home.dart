@@ -422,7 +422,7 @@ class _HomePageState extends State<HomePage> {
                             Input(
                               hintText: "搜索",
                               height: 40.px,
-                              padding: EdgeInsets.fromLTRB(18.px, 0, 40.px, 0),
+                              padding: EdgeInsets.fromLTRB(18.px, 0, 38.px, 0),
                               onChanged: (text) {
                                 _handleSearch(text);
                               },
@@ -439,7 +439,7 @@ class _HomePageState extends State<HomePage> {
                             _searchValue.isNotEmpty ? Align(
                               alignment: Alignment.centerRight,
                               child: Container(
-                                margin: EdgeInsets.fromLTRB(0, 8.px, 10.px, 0),
+                                margin: EdgeInsets.fromLTRB(0, 7.px, 8.px, 0),
                                 child: GestureDetector(
                                   onTap: () {
                                     setState(() {
@@ -447,7 +447,11 @@ class _HomePageState extends State<HomePage> {
                                       _handleSearch('');
                                     });
                                   },
-                                  child: Icon(TDIcons.close_circle_filled, color: hexToColor("#999999")),
+                                  child: Box(
+                                    width: 25.px,
+                                    height: 25.px,
+                                    child: Icon(TDIcons.close_circle_filled, size: 19.px, color: hexToColor("#999999")),
+                                  ),
                                 ),
                               ),
                             ) : const Align(),
