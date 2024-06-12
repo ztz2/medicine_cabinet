@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'package:excel/excel.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:medicine_cabinet/util/pick-excel.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pinyin/pinyin.dart';
 import 'package:file_picker/file_picker.dart';
@@ -85,6 +87,7 @@ class _HomePageState extends State<HomePage> {
   List<MedicineArea> _medicineAreaList = [];
   List<MedicineArea> _medicineAreaListSource = [];
   Directory? _appDocumentsDir;
+  GlobalKey pickExcelKey = GlobalKey();
 
   _updateMedicineAreaList () {
     var cloneMedicineAreaList = _medicineAreaListSource.map((e) => MedicineArea.formJSON(e.toJSON())).toList();
@@ -212,50 +215,39 @@ class _HomePageState extends State<HomePage> {
     TDToast.showText('保存成功', context: context);
   }
 
-  // 选择文件，数据导入
-  _pickFile() async {
+  _parsed(String source) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var data = jsonDecode(source) as List;
+    if (data.isEmpty) {
+      return TDToast.showText('没有获取到数据', context: context);
+    }
+    var count = 0;
+    var list = data.map((e) => MedicineArea.formJSON(e)).toList();
+    list.forEach((element) { element.list.forEach((element) { count++; }); });
+    if (count > 0) {
+      await prefs.setString(MEDICINE_PREFERENCE_KEY, source);
+    }
+    TDToast.showText(count > 0 ? '成功导入$count条数据' : '没有获取到数据，请检查Excel中数据格式是否正确', context: context);
+    setState(() {
+      _medicineAreaListSource = list;
+      _updateMedicineAreaList();
+    });
+  }
+
+  //  选择文件，数据导入
+  _pickFile() async {
     FilePickerResult? pickFileResult = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['xlsx', 'xls'],
     );
-    int count = 0;
-    List<MedicineArea> medicineAreaList = [];
     if (pickFileResult == null) return null;
     File file = File(pickFileResult.files.single.path!);
     var bytes = file.readAsBytesSync();
-    var excel = Excel.decodeBytes(bytes);
-    var tables = excel.tables;
-
-    for (var tableName in tables.keys) {
-      var table = tables[tableName];
-      var rows = table?.rows;
-      var medicineArea = MedicineArea(tableName);
-      if (rows == null) {
-        continue;
-      }
-      for (var row in rows) {
-        dynamic medicineNameCell = row[0];
-        dynamic medicineLocationCell = row[1];
-        if (medicineNameCell == null || medicineLocationCell == null) {
-          continue;
-        }
-        dynamic medicineName = medicineNameCell?.value.toString();
-        dynamic medicineLocation = medicineLocationCell?.value.toString();
-        var medicine = Medicine(medicineName, medicineLocation);
-        medicineArea.list.add(medicine);
-        count++;
-      }
-      medicineAreaList.add(medicineArea);
+    var base64Data = base64Encode(bytes);
+    var pickExcelFunc = (pickExcelKey.currentState as dynamic).pickExcel;
+    if (pickExcelFunc != null) {
+      pickExcelFunc(base64Data);
     }
-
-    // 保存数据到本地
-    await prefs.setString(MEDICINE_PREFERENCE_KEY, jsonEncode(medicineAreaList.map((item) => item.toJSON()).toList()));
-    TDToast.showText(count > 0 ? '成功导入$count条数据' : '导入数据为空，请检查Excel中数据格式是否正确', context: context);
-    setState(() {
-      _medicineAreaListSource = medicineAreaList;
-      _updateMedicineAreaList();
-    });
   }
 
   @override
@@ -304,6 +296,7 @@ class _HomePageState extends State<HomePage> {
               // 顶部区域
               Column(
                 children: [
+                  PickExcel(key: pickExcelKey, onParsed: _parsed),
                   // 标题
                   Container(
                     margin: EdgeInsets.fromLTRB(12.5.px, 13.5.px, 12.5.px, 12.px),
@@ -372,10 +365,15 @@ class _HomePageState extends State<HomePage> {
                                         context: context,
                                         androidBorderRadius: 4,
                                         actions: <BottomSheetAction>[
-                                          BottomSheetAction(title: Text('Excel导入', style: TextStyle(fontSize: 14.px)), onPressed: (context) {
-                                            Navigator.of(context).pop();
-                                            _pickFile();
-                                          }),
+                                          BottomSheetAction(
+                                            onPressed: (context) {
+                                              Navigator.of(context).pop();
+                                              _pickFile();
+                                            },
+                                            title: Center(
+                                              child: Text('excel导入', style: TextStyle(fontSize: 14.px))
+                                            ),
+                                          ),
                                         ],
                                         cancelAction: CancelAction(title: Text('取消', style: TextStyle(fontSize: 14.px))),// onPressed parameter is optional by default will dismiss the ActionSheet
                                       );
